@@ -1,0 +1,20 @@
+{
+  "name": "relax-and-restore-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.1.1",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "netlify-cli": "^26.1.0"
+  }
+}

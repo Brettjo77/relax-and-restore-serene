@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { ways } from '../data/site.js';
+import { images, imageAlt } from '../data/images.js';
+---
+<section class="section ways" id="ways">
+  <div class="section__inner">
+    <header class="ways__head">
+      <p class="eyebrow">Massage your way</p>
+      <h2 class="h2">Two ways to enjoy your treatment</h2>
+    </header>
+
+    <div class="ways__grid">
+      {ways.map((w) => (
+        <article class="waycard">
+          <Image
+            src={images[w.image]}
+            alt={imageAlt[w.image]}
+            class="waycard__img"
+            widths={[420, 640, 840]}
+            sizes="(max-width: 860px) 92vw, 440px"
+            loading="lazy"
+          />
+          <div class="waycard__body">
+            <span class="waycard__icon"><Icon name={w.icon} size={24} /></span>
+            <h3 class="waycard__title">{w.title}</h3>
+            <p class="waycard__text">{w.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ways { background: var(--cream-light); }
+  .ways__head { text-align: center; margin-bottom: 50px; }
+
+  .ways__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .waycard {
+    background: #fff;
+    border: 1px solid var(--line-3);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .waycard:hover { transform: translateY(-3px); box-shadow: var(--shadow-float); }
+  }
+  .waycard__img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .waycard__body { padding: 30px 34px 34px; }
+  .waycard__icon {
+    display: inline-grid; place-items: center;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: var(--sand);
+    color: var(--sage-deep);
+    margin-bottom: 14px;
+  }
+  .waycard__title {
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .waycard__text { color: var(--muted); margin: 0; line-height: 1.7; }
+
+  @media (max-width: 860px) {
+    .ways__grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>

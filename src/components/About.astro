@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import lisa from '../assets/img/lisa.png';
+---
+<section class="section about" id="about">
+  <div class="section__inner about__grid">
+    <div class="about__media">
+      <Image
+        src={lisa}
+        alt="Lisa, founder of Relax & Restore Massage"
+        class="about__img"
+        widths={[360, 520, 720]}
+        sizes="(max-width: 860px) 80vw, 420px"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="about__text">
+      <p class="eyebrow">Meet Lisa</p>
+      <h2 class="h2">Your therapist &amp; founder of Relax &amp; Restore.</h2>
+      <p class="lead">
+        “I'm Lisa, the founder of Relax &amp; Restore Massage, based in Lower Earley,
+        Reading. I offer professional massage treatments from a relaxing home
+        treatment room, as well as mobile appointments for clients who prefer
+        treatment in the comfort of their own home.”
+      </p>
+      <p class="lead">
+        “Every treatment is calm, professional and tailored to you — because taking
+        time for yourself shouldn't be a luxury.”
+      </p>
+      <p class="about__sig script">Lisa</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { background: var(--cream); }
+  .about__grid {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  /* Arched portrait frame (spec §7.3 Dir 01): rounded-top arch with a
+     1.5px --line offset border peeking out behind it. */
+  .about__media { position: relative; }
+  .about__media::before {
+    content: "";
+    position: absolute;
+    inset: -14px -14px 14px -14px;
+    border: 1.5px solid var(--line);
+    border-radius: 200px 200px 14px 14px;
+    z-index: 0;
+  }
+  .about__img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 512 / 720;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 200px 200px 14px 14px;
+    box-shadow: var(--shadow-card);
+  }
+  .about__text .h2 { margin-bottom: 22px; max-width: 14ch; }
+  .about__sig { font-size: 46px; margin: 6px 0 0; }
+
+  @media (max-width: 860px) {
+    .about__grid { grid-template-columns: 1fr; gap: 44px; }
+    .about__media { max-width: 360px; margin-inline: auto; }
+  }
+</style>

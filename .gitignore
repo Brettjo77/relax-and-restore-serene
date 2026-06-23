@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Redundant zipped copy of handoff/ — keep on disk, not in the repo
+*.zip
+
+# Node / Astro (for when the site is scaffolded)
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+.netlify/
+.vercel/

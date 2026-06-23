@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+import { benefits } from '../data/site.js';
+---
+<section class="section benefits" id="benefits">
+  <div class="section__inner">
+    <header class="benefits__head">
+      <p class="eyebrow">Why massage</p>
+      <h2 class="h2">The benefits of Swedish massage</h2>
+    </header>
+
+    <ul class="benefits__grid">
+      {benefits.map((b) => (
+        <li class="benefit">
+          <span class="benefit__icon"><Icon name={b.icon} size={26} /></span>
+          <span class="benefit__label">{b.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .benefits {
+    background: var(--sage-deep);
+    color: var(--cream);
+  }
+  .benefits .h2 { color: #fff; }
+  .benefits .eyebrow { color: var(--cream); }
+  .benefits__head { text-align: center; margin-bottom: 50px; }
+
+  .benefits__grid {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  .benefit {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .benefit__icon {
+    flex: 0 0 auto;
+    width: 56px; height: 56px;
+    display: grid; place-items: center;
+    border: 1.5px solid rgba(251, 246, 238, .5);
+    border-radius: 50%;
+    color: var(--cream);
+  }
+  .benefit__label {
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: rgba(251, 246, 238, .92);
+  }
+
+  @media (max-width: 860px) {
+    .benefits__grid { grid-template-columns: 1fr; gap: 22px; max-width: 28rem; margin-inline: auto; }
+  }
+</style>

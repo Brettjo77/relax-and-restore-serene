@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { business } from '../data/site.js';
+---
+<footer class="footer">
+  <div class="footer__inner">
+    <a href="#top" class="footer__brand" aria-label={`${business.name} home`}>
+      <Image src={logo} alt={`${business.name} logo`} width={48} height={48} class="footer__logo" loading="lazy" />
+      <span class="footer__name">{business.wordmark} MASSAGE</span>
+    </a>
+    <p class="footer__tagline">{business.tagline}</p>
+    <p class="footer__copy">
+      © 2026 Relax &amp; Restore Massage ·
+      <a href={business.instagramUrl} target="_blank" rel="noopener">{business.instagramHandle}</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--forest-2);
+    color: var(--cream);
+    padding: 56px var(--gutter);
+    text-align: center;
+  }
+  .footer__inner { max-width: var(--maxw); margin-inline: auto; }
+  .footer__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--cream);
+  }
+  .footer__logo { width: 48px; height: 48px; border-radius: 50%; }
+  .footer__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: .13em;
+  }
+  .footer__tagline { margin: 14px 0 0; color: var(--gold-muted); font-size: 14px; letter-spacing: .04em; }
+  .footer__copy { margin: 8px 0 0; font-size: 13px; color: var(--muted-3); }
+  .footer__copy a { color: var(--gold-light); text-decoration: none; }
+  .footer__copy a:hover { text-decoration: underline; }
+</style>

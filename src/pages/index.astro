@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Services from '../components/Services.astro';
+import Benefits from '../components/Benefits.astro';
+import Ways from '../components/Ways.astro';
+import Testimonial from '../components/Testimonial.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base>
+  <Nav />
+  <main id="top">
+    <Hero />
+    <About />
+    <Services />
+    <Benefits />
+    <Ways />
+    <Testimonial />
+    <ContactForm />
+    <Footer />
+  </main>
+</Base>
+
+<script>
+  // Direction 01 · Serene — mobile nav toggle + transparent→solid on scroll.
+  const topnav = document.getElementById('topnav');
+  const toggle = document.getElementById('navtoggle');
+
+  if (topnav && toggle) {
+    const closeMenu = () => {
+      topnav.removeAttribute('data-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    };
+    toggle.addEventListener('click', () => {
+      const open = topnav.getAttribute('data-open') === 'true';
+      if (open) { closeMenu(); return; }
+      topnav.setAttribute('data-open', 'true');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    });
+    topnav.querySelectorAll('.nav a').forEach((a) =>
+      a.addEventListener('click', closeMenu)
+    );
+
+    // Flip to the solid state once the page is scrolled off the hero top.
+    const onScroll = () => {
+      topnav.setAttribute('data-state', window.scrollY > 24 ? 'solid' : 'top');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

@@ -1,0 +1,71 @@
+---
+import '../styles/tokens.css';
+import { business } from '../data/site.js';
+
+const {
+  title = 'Relax & Restore Massage | Swedish Massage in Lower Earley, Reading',
+  description = 'Professional Swedish massage in Lower Earley, Reading. Full body and back, neck & shoulders treatments — in a calming treatment room or mobile to your home. 10% off your first treatment.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+// Resolve assets through the configured base (GitHub Pages serves from /<repo>/).
+const logoHref = `${import.meta.env.BASE_URL}logo.png`.replace(/\/{2,}/g, '/');
+const ogImage = new URL(logoHref, Astro.site);
+
+// LocalBusiness JSON-LD (spec §14)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthAndBeautyBusiness',
+  name: business.name,
+  description,
+  url: canonical.href,
+  image: ogImage.href,
+  telephone: business.phone,
+  priceRange: '££',
+  areaServed: 'Reading, Lower Earley and surrounding areas, Berkshire',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: business.locality,
+    addressRegion: 'Berkshire',
+    addressCountry: 'GB',
+  },
+  sameAs: [business.instagramUrl],
+  openingHours: ['Mo-Fr 09:00-20:00', 'Sa 09:00-17:00'],
+};
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Favicon / touch icon (generated from logo.png) -->
+    <link rel="icon" type="image/png" href={logoHref} />
+    <link rel="apple-touch-icon" href={logoHref} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts (spec §3) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Mulish:wght@300;400;500;600;700&family=Sacramento&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

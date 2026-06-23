@@ -1,0 +1,124 @@
+---
+// Direction 01 · Serene — centred sticky top nav (spec §7.1, §8 Dir 01).
+// Transparent over the hero, turns solid cream on scroll.
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { business, nav } from '../data/site.js';
+---
+<header class="topnav" id="topnav" data-state="top">
+  <div class="topnav__inner">
+    <a href="#top" class="brand" aria-label={`${business.name} home`}>
+      <Image src={logo} alt={`${business.name} logo`} width={44} height={44} class="brand__logo" loading="eager" />
+      <span class="brand__name">{business.wordmark}</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary" id="nav-panel">
+      <ul class="nav__links">
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+      <a class="btn btn--sage nav__book" href="#contact">Book now</a>
+    </nav>
+
+    <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: background-color .25s ease, box-shadow .25s ease, border-color .25s ease;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+  }
+  /* Solid state once scrolled past the hero top */
+  .topnav[data-state="solid"] {
+    background: color-mix(in srgb, var(--cream) 88%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom-color: var(--line-3);
+  }
+
+  .topnav__inner {
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: 16px var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--brown-deep); }
+  .brand__logo { width: 44px; height: 44px; border-radius: 50%; flex: 0 0 auto; }
+  .brand__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: .13em;
+    color: var(--brown-deep);
+  }
+  /* Over the hero image, the wordmark reads on a dark gradient */
+  .topnav[data-state="top"] .brand,
+  .topnav[data-state="top"] .brand__name { color: var(--cream); }
+
+  .nav { display: flex; align-items: center; gap: 30px; }
+  .nav__links { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 30px; }
+  .nav__links a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: .02em;
+    color: var(--ink);
+    transition: color .15s ease;
+  }
+  .nav__links a:hover { color: var(--sage-deep); }
+  .topnav[data-state="top"] .nav__links a { color: rgba(251, 246, 238, .92); }
+  .topnav[data-state="top"] .nav__links a:hover { color: #fff; }
+
+  .navtoggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 8px; min-width: 44px; min-height: 44px;
+    align-items: center; justify-content: center;
+  }
+  .navtoggle span { width: 22px; height: 2px; background: var(--brown-deep); transition: .2s ease; }
+  .topnav[data-state="top"] .navtoggle span { background: var(--cream); }
+
+  @media (max-width: 760px) {
+    .navtoggle { display: flex; }
+    .nav {
+      position: absolute;
+      left: 0; right: 0;
+      top: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line-3);
+      box-shadow: var(--shadow-card);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .28s ease;
+    }
+    .topnav[data-open="true"] .nav { max-height: 80vh; }
+    .nav__links { flex-direction: column; align-items: stretch; gap: 0; padding: 8px var(--gutter); }
+    .nav__links a { display: block; padding: 12px 0; color: var(--ink); }
+    .nav__book { margin: 8px var(--gutter) 18px; }
+    /* Keep the toggle visible/dark even in "top" state once panel is open */
+    .topnav[data-open="true"][data-state="top"] .navtoggle span { background: var(--brown-deep); }
+    .topnav[data-open="true"] .navtoggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .topnav[data-open="true"] .navtoggle span:nth-child(2) { opacity: 0; }
+    .topnav[data-open="true"] .navtoggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .topnav, .nav, .navtoggle span { transition: none; }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+import { testimonials } from '../data/site.js';
+// Built as a list so more testimonials can be added later (spec §7.7).
+const featured = testimonials[0];
+---
+<section class="section testimonial">
+  <div class="testimonial__card">
+    <div class="testimonial__stars" aria-label={`${featured.rating} out of 5 stars`}>
+      {Array.from({ length: featured.rating }).map(() => (
+        <Icon name="star" size={20} />
+      ))}
+    </div>
+    <blockquote class="testimonial__quote">“{featured.quote}”</blockquote>
+    <p class="testimonial__name">{featured.name}</p>
+  </div>
+</section>
+
+<style>
+  .testimonial {
+    background: var(--blush);
+    display: flex;
+    justify-content: center;
+  }
+  .testimonial__card {
+    background: #fff;
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    max-width: 720px;
+    text-align: center;
+    padding: 48px 50px 44px;
+  }
+  .testimonial__stars {
+    display: inline-flex;
+    gap: 4px;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .testimonial__quote {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(20px, 2.5vw, 26px);
+    line-height: 1.45;
+    color: var(--brown-deep);
+    margin: 0;
+  }
+  .testimonial__name {
+    margin: 26px 0 0;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--rose-text);
+  }
+
+  @media (max-width: 640px) {
+    .testimonial__card { padding: 36px 26px 32px; }
+  }
+</style>

@@ -1,0 +1,113 @@
+---
+// Direction 01 · Serene — two cards side by side (image top, content below). Spec §7.4, §8 Dir 01.
+import { Image } from 'astro:assets';
+import { services, business } from '../data/site.js';
+import { images, imageAlt } from '../data/images.js';
+---
+<section class="section services" id="services">
+  <div class="section__inner">
+    <header class="services__head">
+      <p class="eyebrow">Treatments</p>
+      <h2 class="h2">A gentle touch that heals body, mind &amp; soul</h2>
+    </header>
+
+    <ul class="cards">
+      {services.map((s) => (
+        <li class="card">
+          <div class="card__media">
+            <Image
+              src={images[s.image]}
+              alt={imageAlt[s.image]}
+              class="card__img"
+              widths={[420, 640, 840]}
+              sizes="(max-width: 860px) 92vw, 540px"
+              loading="lazy"
+            />
+            <span class="card__num">{s.num}</span>
+          </div>
+          <div class="card__body">
+            <div class="card__top">
+              <h3 class="card__name">{s.name}</h3>
+              <span class="card__price">{s.price}</span>
+            </div>
+            <p class="card__dur">{s.durations}</p>
+            <p class="card__desc">{s.description}</p>
+            <a class="btn btn--sage card__book" href="#contact">Book</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="services__foot">Prices confirmed on enquiry · {business.offer}</p>
+  </div>
+</section>
+
+<style>
+  .services { background: var(--cream); }
+  .services__head { text-align: center; max-width: 30ch; margin: 0 auto 50px; }
+
+  .cards {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card__media { position: relative; }
+  .card__img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+  }
+  .card__num {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: var(--sage);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+  }
+  .card__body { padding: 26px 28px 30px; display: flex; flex-direction: column; flex: 1; }
+  .card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .card__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(21px, 2.2vw, 26px);
+    color: var(--brown-deep);
+  }
+  .card__price {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--sage-deep);
+    white-space: nowrap;
+  }
+  .card__dur {
+    margin: 8px 0 0;
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .card__desc { margin: 14px 0 0; color: var(--muted); line-height: 1.7; }
+  .card__book { margin-top: auto; align-self: flex-start; margin-top: 22px; }
+
+  .services__foot { margin: 36px 0 0; text-align: center; font-size: 13px; color: var(--muted-2); }
+
+  @media (max-width: 860px) {
+    .cards { grid-template-columns: 1fr; max-width: 30rem; margin-inline: auto; }
+  }
+</style>
