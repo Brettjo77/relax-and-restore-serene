@@ -6,7 +6,7 @@
 
 export const business = {
   name: "Lisa's Relax & Restore Massage",
-  wordmark: 'RELAX & RESTORE',
+  wordmark: "LISA'S RELAX & RESTORE",
   tagline: 'Mobile Massage · Reading',
   areaServed:
     'Mobile across Wokingham, Bracknell, Sandhurst & Crowthorne — treatment room in Lower Earley, Reading',
