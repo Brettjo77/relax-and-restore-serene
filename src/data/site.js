@@ -135,12 +135,12 @@ export const testimonials = [
   },
 ];
 
-// Contact form select options — match the live + coming-soon treatments.
+// Contact form select options.
 export const treatmentOptions = [
   'Swedish Full Body Massage',
   'Back, Neck & Shoulder Massage',
-  'Pedicures (coming soon)',
-  'Lymphatic Drainage (coming soon)',
+  'Pedicures',
+  'Lymphatic Drainage',
   'Not sure yet',
 ];
 
