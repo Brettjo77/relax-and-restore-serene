@@ -21,20 +21,22 @@ import { images, imageAlt } from '../data/images.js';
                 src={images[s.image]}
                 alt={imageAlt[s.image]}
                 class="card__img"
-                widths={[120, 240]}
-                sizes="72px"
+                widths={[160, 320]}
+                sizes="88px"
                 loading="lazy"
               />
             ) : (
-              <Icon name={s.icon} size={30} />
+              <Icon name={s.icon} size={36} />
             )}
           </span>
           <div class="card__body">
-            <h3 class="card__name">{s.name}</h3>
-            <p class="card__dur">{s.durations}</p>
+            <div class="card__top">
+              <h3 class="card__name">{s.name}</h3>
+              <span class="card__dur">{s.durations}</span>
+            </div>
             <p class="card__desc">{s.description}</p>
-            <a class="btn btn--sage card__book" href="#contact">Book</a>
           </div>
+          <a class="btn btn--sage card__book" href="#contact">Book</a>
         </li>
       ))}
     </ul>
@@ -47,43 +49,61 @@ import { images, imageAlt } from '../data/images.js';
   .services { background: var(--sand); }
   .services__head { text-align: center; max-width: 30ch; margin: 0 auto 34px; }
 
+  /* Horizontal rows: thumbnail left, text middle, Book right */
   .cards {
     list-style: none;
-    margin: 0; padding: 0;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
-    align-items: stretch;
+    margin: 0 auto; padding: 0;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
   }
   .card {
     background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     box-shadow: var(--shadow-card);
-    padding: 28px 24px 26px;
-    text-align: center;
+    padding: 22px 26px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    gap: 24px;
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   }
   /* Round thumbnail: photo or icon, same size for every card */
   .card__thumb {
-    width: 72px; height: 72px;
+    width: 88px; height: 88px;
     border-radius: 50%;
     overflow: hidden;
     flex: 0 0 auto;
     display: grid; place-items: center;
     background: var(--sand);
     color: var(--sage-deep);
-    margin-bottom: 16px;
     transition: transform .25s ease, background-color .25s ease, color .25s ease;
   }
   .card__img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  /* Hover: lift the card, lift & accent the thumbnail */
+  .card__body { flex: 1; min-width: 0; }
+  .card__top { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; }
+  .card__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.2;
+    color: var(--brown-deep);
+    margin: 0;
+  }
+  .card__dur {
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .card__desc { margin: 8px 0 0; font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+  .card__book { flex: 0 0 auto; }
+
+  /* Hover: lift the row, accent the thumbnail */
   @media (prefers-reduced-motion: no-preference) {
-    .card:hover { transform: translateY(-6px); }
+    .card:hover { transform: translateY(-4px); }
     .card:hover .card__thumb { transform: scale(1.06); }
   }
   .card:hover {
@@ -93,36 +113,12 @@ import { images, imageAlt } from '../data/images.js';
   .card:hover .card__thumb { background: var(--sage); color: #fff; }
   .card:focus-within { border-color: var(--sage); }
 
-  .card__body { display: flex; flex-direction: column; align-items: center; flex: 1; }
-  .card__name {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 17.5px;
-    line-height: 1.35;
-    color: var(--brown-deep);
-    margin: 0;
-    min-height: 2.7em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .card__dur {
-    margin: 7px 0 0;
-    font-size: 11px;
-    letter-spacing: .13em;
-    text-transform: uppercase;
-    color: var(--muted-2);
-  }
-  .card__desc { margin: 11px 0 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
-  .card__book { margin-top: auto; padding-top: 18px; }
-
   .services__foot { margin: 30px 0 0; text-align: center; font-size: 13px; color: var(--muted-2); }
 
-  /* 4 → 2 (tablet) → 1 (phone), reusing the site's 860/640 breakpoints */
-  @media (max-width: 860px) {
-    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 34rem; margin-inline: auto; }
-  }
-  @media (max-width: 480px) {
-    .cards { grid-template-columns: 1fr; max-width: 22rem; }
+  /* Stack the row contents on small phones */
+  @media (max-width: 560px) {
+    .card { flex-direction: column; text-align: center; gap: 14px; padding: 26px 22px; }
+    .card__top { flex-direction: column; align-items: center; gap: 4px; }
+    .card__book { width: 100%; max-width: 220px; }
   }
 </style>
