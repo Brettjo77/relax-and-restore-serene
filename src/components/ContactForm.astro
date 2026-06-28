@@ -4,9 +4,12 @@
 import Icon from './Icon.astro';
 import { business, treatmentOptions, locationOptions, timeOptions } from '../data/site.js';
 
-// PLACEHOLDER — replace with Lisa's Formspree form ID before launch (https://formspree.io).
-// e.g. 'https://formspree.io/f/xxxxxxxx'
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_WITH_FORM_ID';
+// Formspree form ID — set PUBLIC_FORMSPREE_ID in .env (see .env.example) once Lisa's form
+// exists (https://formspree.io). Until then it falls back to a placeholder and the form
+// shows the email/phone fallback instead of silently dropping enquiries.
+const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID || 'REPLACE_WITH_FORM_ID';
+const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_ID}`;
+const FORMSPREE_READY = FORMSPREE_ID !== 'REPLACE_WITH_FORM_ID';
 ---
 <section class="section contact" id="contact">
   <div class="section__inner">
@@ -28,6 +31,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_WITH_FORM_ID';
           class="form"
           method="POST"
           action={FORMSPREE_ENDPOINT}
+          data-ready={FORMSPREE_READY ? 'true' : 'false'}
           novalidate
         >
           <div class="form__row">
@@ -334,6 +338,15 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_WITH_FORM_ID';
       const submitBtn = form.querySelector('.form__submit') as HTMLButtonElement;
       submitBtn.disabled = true;
       sendError.hidden = true;
+
+      // If the Formspree ID hasn't been set yet, don't POST to a dead endpoint —
+      // go straight to the email/phone fallback so the enquiry isn't lost.
+      if (form.getAttribute('data-ready') !== 'true') {
+        submitBtn.disabled = false;
+        sendError.hidden = false;
+        sendError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
 
       try {
         // POST to Formspree (AJAX) so we can show the in-place thank-you with no navigation.

@@ -26,6 +26,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Formspree form ID — set this under Settings → Secrets and variables →
+          # Actions → Variables as PUBLIC_FORMSPREE_ID. It's a repo *variable* (not a
+          # secret) because the ID is public anyway (it appears in the page's form action).
+          # If unset, the build falls back to the placeholder and the form shows the
+          # email/phone fallback instead of dropping enquiries.
+          PUBLIC_FORMSPREE_ID: ${{ vars.PUBLIC_FORMSPREE_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
