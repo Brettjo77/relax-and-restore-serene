@@ -38,8 +38,10 @@ import { testimonials } from '../data/site.js';
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 26px;
-    align-items: start;
+    align-items: stretch;
   }
+  /* Make each grid cell a flex container so the card fills the full row height. */
+  .testimonial__grid > li { display: flex; }
   .testimonial__card {
     background: #fff;
     border-radius: var(--r-card);
@@ -47,7 +49,7 @@ import { testimonials } from '../data/site.js';
     text-align: center;
     padding: 38px 34px 34px;
     margin: 0;
-    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -69,6 +71,8 @@ import { testimonials } from '../data/site.js';
   }
   .testimonial__name {
     margin: 22px 0 0;
+    padding-top: 4px;
+    margin-top: auto;
     font-weight: 600;
     letter-spacing: .04em;
     color: var(--rose-text);
