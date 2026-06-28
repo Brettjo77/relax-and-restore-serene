@@ -2,7 +2,7 @@
 // Direction 01 · Serene — 2-col contact: form left, details panel (--sand) right (spec §8 Dir 01).
 // Hosted on GitHub Pages → form submits to Formspree (no Netlify Forms backend on Pages).
 import Icon from './Icon.astro';
-import { business, treatmentOptions, locationOptions, timeOptions } from '../data/site.js';
+import { business, treatmentOptions, locationOptions } from '../data/site.js';
 
 // Formspree form ID — set PUBLIC_FORMSPREE_ID in .env (see .env.example) once Lisa's form
 // exists (https://formspree.io). Until then it falls back to a placeholder and the form
@@ -80,20 +80,6 @@ const FORMSPREE_READY = FORMSPREE_ID !== 'REPLACE_WITH_FORM_ID';
             <span class="field__error" data-error></span>
           </fieldset>
 
-          <div class="form__row form__row--2">
-            <label class="field">
-              <span class="field__label">Preferred date</span>
-              <input type="date" name="date" />
-            </label>
-            <label class="field">
-              <span class="field__label">Preferred time</span>
-              <select name="time">
-                <option value="" selected>No preference</option>
-                {timeOptions.map((t) => <option value={t}>{t}</option>)}
-              </select>
-            </label>
-          </div>
-
           <div class="form__row">
             <label class="field">
               <span class="field__label">Message</span>
@@ -139,7 +125,7 @@ const FORMSPREE_READY = FORMSPREE_ID !== 'REPLACE_WITH_FORM_ID';
 
 <style>
   .contact { background: var(--cream-light); }
-  .contact__head { text-align: center; margin-bottom: 44px; }
+  .contact__head { text-align: center; margin-bottom: 32px; }
   .contact__grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr;

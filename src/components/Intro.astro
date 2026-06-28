@@ -1,0 +1,87 @@
+---
+// Quick "what we do" summary right after the hero — sets context fast, before the detail.
+import Icon from './Icon.astro';
+
+const pillars = [
+  {
+    icon: 'lotus',
+    title: 'Swedish massage',
+    body: 'Relaxing full-body and targeted back, neck & shoulder treatments.',
+  },
+  {
+    icon: 'home',
+    title: 'Mobile or treatment room',
+    body: 'I come to you, or visit the calming room in Lower Earley.',
+  },
+  {
+    icon: 'pin',
+    title: 'Your local area',
+    body: 'Covering Wokingham, Bracknell, Sandhurst & Crowthorne.',
+  },
+];
+---
+<section class="section intro">
+  <div class="section__inner">
+    <p class="eyebrow intro__eyebrow">What I do</p>
+    <p class="intro__lead">
+      Professional Swedish massage in Lower Earley — mobile to your home, or in a
+      peaceful treatment room. Here to help you relax, restore and feel like yourself again.
+    </p>
+
+    <ul class="intro__pillars">
+      {pillars.map((p) => (
+        <li class="intro__pillar">
+          <span class="intro__icon"><Icon name={p.icon} size={24} /></span>
+          <h3 class="intro__ptitle">{p.title}</h3>
+          <p class="intro__pbody">{p.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .intro { background: var(--cream); }
+  .intro__eyebrow { text-align: center; }
+  .intro__lead {
+    max-width: 46ch;
+    margin: 10px auto 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(19px, 2vw, 24px);
+    line-height: 1.5;
+    color: var(--brown-deep);
+  }
+
+  .intro__pillars {
+    list-style: none;
+    margin: 38px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 26px;
+  }
+  .intro__pillar { text-align: center; }
+  .intro__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--sand);
+    color: var(--sage-deep);
+    margin-bottom: 14px;
+  }
+  .intro__ptitle {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--brown-deep);
+    margin: 0 0 6px;
+  }
+  .intro__pbody { color: var(--muted); line-height: 1.6; margin: 0; max-width: 30ch; margin-inline: auto; }
+
+  /* 3 → 1 on phones (reuses the site's 640 breakpoint). */
+  @media (max-width: 640px) {
+    .intro__pillars { grid-template-columns: 1fr; gap: 22px; max-width: 24rem; margin-inline: auto; }
+  }
+</style>

@@ -55,7 +55,7 @@
 
   /* Layout */
   --maxw: 1140px;
-  --section-y: 96px;   /* vertical section padding (desktop) */
+  --section-y: 72px;   /* vertical section padding (desktop) */
   --gutter: 40px;      /* horizontal page gutter (desktop) */
 
   /* Boutique Luxe specific */
@@ -200,7 +200,7 @@ p { margin: 0 0 1em; }
 /* Mobile spacing/sizing (spec §12) */
 @media (max-width: 640px) {
   :root {
-    --section-y: 60px;
+    --section-y: 46px;
     --gutter: 22px;
   }
 }

@@ -22,8 +22,8 @@ export const business = {
   emailHref: 'mailto:lisarelax@outlook.com',
   instagramHandle: '@relax.restore1',
   instagramUrl: 'https://www.instagram.com/relax.restore1/',
-  // PLACEHOLDERS — Lisa to send links/details (keep visible, don't fabricate):
-  facebookUrl: '[facebook-url]',    // PLACEHOLDER — set Lisa's Facebook page URL
+  facebookUrl: 'https://www.facebook.com/profile.php?id=61590344507741',
+  // PLACEHOLDER — Lisa to send link (keep visible, don't fabricate):
   tiktokUrl: '[tiktok-url]',        // PLACEHOLDER — set Lisa's TikTok URL
   hours: 'Mon–Fri 9am–8pm · Sat 9am–5pm · Sun by appointment', // PLACEHOLDER — confirm
   offer: '10% off your first treatment for new clients',
