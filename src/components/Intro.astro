@@ -1,31 +1,29 @@
 ---
-// Quick "what we do" summary right after the hero — sets context fast, before the detail.
+// Quick "what I do" summary right after the hero — the actual treatments, before the detail.
 import Icon from './Icon.astro';
+import { services } from '../data/site.js';
 
-const pillars = [
-  {
-    icon: 'lotus',
-    title: 'Swedish massage',
-    body: 'Relaxing full-body and targeted back, neck & shoulder treatments.',
-  },
-  {
-    icon: 'home',
-    title: 'Mobile or treatment room',
-    body: 'I come to you, or visit the calming room in Lower Earley.',
-  },
-  {
-    icon: 'pin',
-    title: 'Your local area',
-    body: 'Covering Wokingham, Bracknell, Sandhurst & Crowthorne.',
-  },
-];
+// Icon + one-line summary per treatment, keyed to the service name so it stays in sync
+// with site.js. Falls back to the lotus icon / the service's own description if unmatched.
+const meta = {
+  'Swedish Full Body Massage': { icon: 'lotus', body: 'Relaxing full-body massage for deep relaxation and stress relief.' },
+  'Back, Neck & Shoulder Massage': { icon: 'muscle', body: 'Targeted relief for tension where you carry stress the most.' },
+  'Pedicures': { icon: 'flex', body: 'A restorative pedicure to leave your feet feeling cared for.' },
+  'Lymphatic Drainage': { icon: 'circulation', body: 'Gentle, rhythmic treatment to reduce puffiness and support wellbeing.' },
+};
+
+const pillars = services.map((s) => ({
+  icon: meta[s.name]?.icon ?? 'lotus',
+  title: s.name,
+  body: meta[s.name]?.body ?? s.description,
+}));
 ---
 <section class="section intro">
   <div class="section__inner">
     <p class="eyebrow intro__eyebrow">What I do</p>
     <p class="intro__lead">
-      Professional Swedish massage in Lower Earley — mobile to your home, or in a
-      peaceful treatment room. Here to help you relax, restore and feel like yourself again.
+      Professional treatments in Lower Earley — mobile to your home, or in a peaceful
+      treatment room. Here to help you relax, restore and feel like yourself again.
     </p>
 
     <ul class="intro__pillars">
@@ -58,7 +56,7 @@ const pillars = [
     margin: 38px 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 26px;
   }
   .intro__pillar { text-align: center; }
@@ -80,8 +78,11 @@ const pillars = [
   }
   .intro__pbody { color: var(--muted); line-height: 1.6; margin: 0; max-width: 30ch; margin-inline: auto; }
 
-  /* 3 → 1 on phones (reuses the site's 640 breakpoint). */
+  /* 4 → 2 across tablets, → 1 on phones (reuses the site's 860/640 breakpoints). */
+  @media (max-width: 860px) {
+    .intro__pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 38rem; margin-inline: auto; }
+  }
   @media (max-width: 640px) {
-    .intro__pillars { grid-template-columns: 1fr; gap: 22px; max-width: 24rem; margin-inline: auto; }
+    .intro__pillars { grid-template-columns: 1fr; gap: 22px; max-width: 24rem; }
   }
 </style>
