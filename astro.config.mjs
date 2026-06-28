@@ -2,12 +2,11 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-// Hosted on GitHub Pages as a PROJECT site: https://brettjo77.github.io/relax-and-restore-serene/
-// `site` + `base` must match the repo path so assets/links resolve correctly.
-// When moving to a custom domain, set site to that domain and base to '/'.
+// Hosted on GitHub Pages with the custom domain www.lisasrelaxrestoremassage.co.uk
+// (served at the root, so base is '/'). The public/CNAME file claims the domain.
 export default defineConfig({
-  site: 'https://brettjo77.github.io',
-  base: '/relax-and-restore-serene/',
+  site: 'https://www.lisasrelaxrestoremassage.co.uk',
+  base: '/',
   build: {
     inlineStylesheets: 'auto',
   },
