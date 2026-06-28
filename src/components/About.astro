@@ -1,13 +1,15 @@
 ---
 import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
 import lisa from '../assets/img/lisa.png';
+import { business, credentials } from '../data/site.js';
 ---
 <section class="section about" id="about">
   <div class="section__inner about__grid">
     <div class="about__media">
       <Image
         src={lisa}
-        alt="Lisa, founder of Relax & Restore Massage"
+        alt={`Lisa, founder of ${business.name}`}
         class="about__img"
         widths={[360, 520, 720]}
         sizes="(max-width: 860px) 80vw, 420px"
@@ -19,7 +21,7 @@ import lisa from '../assets/img/lisa.png';
       <p class="eyebrow">Meet Lisa</p>
       <h2 class="h2">Your therapist &amp; founder of Relax &amp; Restore.</h2>
       <p class="lead">
-        “I'm Lisa, the founder of Relax &amp; Restore Massage, based in Lower Earley,
+        “I'm Lisa, the founder of {business.name}, based in Lower Earley,
         Reading. I offer professional massage treatments from a relaxing home
         treatment room, as well as mobile appointments for clients who prefer
         treatment in the comfort of their own home.”
@@ -29,6 +31,18 @@ import lisa from '../assets/img/lisa.png';
         time for yourself shouldn't be a luxury.”
       </p>
       <p class="about__sig script">Lisa</p>
+
+      <!-- Qualified & accredited (facts only — no certificate image / surname) -->
+      <ul class="about__creds" aria-label="Qualifications">
+        <li>
+          <Icon name="star" size={18} />
+          <span><strong>{credentials.qualification}</strong> · {credentials.issuer}</span>
+        </li>
+        <li>
+          <Icon name="heal" size={18} />
+          <span>{credentials.accreditation}</span>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
@@ -41,6 +55,18 @@ import lisa from '../assets/img/lisa.png';
     gap: 56px;
     align-items: center;
   }
+  .about__creds {
+    list-style: none;
+    margin: 26px 0 0;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .about__creds li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+  .about__creds li :global(svg) { color: var(--sage-deep); flex: 0 0 auto; }
+  .about__creds strong { color: var(--brown-deep); font-weight: 600; }
   /* Arched portrait frame (spec §7.3 Dir 01): rounded-top arch with a
      1.5px --line offset border peeking out behind it. */
   .about__media { position: relative; }

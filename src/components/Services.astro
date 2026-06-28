@@ -13,32 +13,40 @@ import { images, imageAlt } from '../data/images.js';
 
     <ul class="cards">
       {services.map((s) => (
-        <li class="card">
+        <li class:list={["card", { "card--soon": s.comingSoon }]}>
           <div class="card__media">
-            <Image
-              src={images[s.image]}
-              alt={imageAlt[s.image]}
-              class="card__img"
-              widths={[420, 640, 840]}
-              sizes="(max-width: 860px) 92vw, 540px"
-              loading="lazy"
-            />
+            {s.image ? (
+              <Image
+                src={images[s.image]}
+                alt={imageAlt[s.image]}
+                class="card__img"
+                widths={[420, 640, 840]}
+                sizes="(max-width: 860px) 92vw, 540px"
+                loading="lazy"
+              />
+            ) : (
+              <div class="card__img card__img--placeholder" aria-hidden="true"></div>
+            )}
             <span class="card__num">{s.num}</span>
+            {s.comingSoon && <span class="card__badge">Coming soon</span>}
           </div>
           <div class="card__body">
             <div class="card__top">
               <h3 class="card__name">{s.name}</h3>
-              <span class="card__price">{s.price}</span>
             </div>
             <p class="card__dur">{s.durations}</p>
             <p class="card__desc">{s.description}</p>
-            <a class="btn btn--sage card__book" href="#contact">Book</a>
+            {s.comingSoon ? (
+              <a class="btn btn--sage card__book" href="#contact">Register interest</a>
+            ) : (
+              <a class="btn btn--sage card__book" href="#contact">Book</a>
+            )}
           </div>
         </li>
       ))}
     </ul>
 
-    <p class="services__foot">Prices confirmed on enquiry · {business.offer}</p>
+    <p class="services__foot">{business.pricingNote} · {business.offer}</p>
   </div>
 </section>
 
@@ -81,6 +89,27 @@ import { images, imageAlt } from '../data/images.js';
     border-radius: 50%;
     display: grid; place-items: center;
   }
+  /* Coming-soon treatments: muted card, no photo, badge instead of price. */
+  .card__img--placeholder {
+    background:
+      radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.7), transparent 60%),
+      var(--blush, #f3e8e6);
+  }
+  .card__badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba(255, 255, 255, .92);
+    color: var(--sage-deep);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-card);
+  }
+  .card--soon { opacity: .82; }
+  .card--soon .card__name { color: var(--muted); }
   .card__body { padding: 26px 28px 30px; display: flex; flex-direction: column; flex: 1; }
   .card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
   .card__name {
@@ -88,12 +117,6 @@ import { images, imageAlt } from '../data/images.js';
     font-weight: 600;
     font-size: clamp(21px, 2.2vw, 26px);
     color: var(--brown-deep);
-  }
-  .card__price {
-    font-family: var(--font-display);
-    font-size: 22px;
-    color: var(--sage-deep);
-    white-space: nowrap;
   }
   .card__dur {
     margin: 8px 0 0;

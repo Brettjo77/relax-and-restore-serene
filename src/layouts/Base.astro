@@ -3,14 +3,18 @@ import '../styles/tokens.css';
 import { business } from '../data/site.js';
 
 const {
-  title = 'Relax & Restore Massage | Swedish Massage in Lower Earley, Reading',
-  description = 'Professional Swedish massage in Lower Earley, Reading. Full body and back, neck & shoulders treatments — in a calming treatment room or mobile to your home. 10% off your first treatment.',
+  title = "Lisa's Relax & Restore Massage | Swedish Massage in Lower Earley & Wokingham",
+  description = 'Professional Swedish massage in Lower Earley, Reading — plus mobile treatments across Wokingham, Bracknell, Sandhurst & Crowthorne. Full body and back, neck & shoulder massage. 10% off your first treatment.',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Resolve assets through the configured base (GitHub Pages serves from /<repo>/).
 const logoHref = `${import.meta.env.BASE_URL}logo.png`.replace(/\/{2,}/g, '/');
 const ogImage = new URL(logoHref, Astro.site);
+
+// Social profiles for sameAs — only include URLs Lisa has supplied (skip [placeholders]).
+const sameAs = [business.instagramUrl, business.facebookUrl, business.tiktokUrl]
+  .filter((u) => u && !u.startsWith('['));
 
 // LocalBusiness JSON-LD (spec §14)
 const jsonLd = {
@@ -21,15 +25,16 @@ const jsonLd = {
   url: canonical.href,
   image: ogImage.href,
   telephone: business.phone,
+  email: business.email,
   priceRange: '££',
-  areaServed: 'Reading, Lower Earley and surrounding areas, Berkshire',
+  areaServed: business.areaServedSchema,
   address: {
     '@type': 'PostalAddress',
     addressLocality: business.locality,
     addressRegion: 'Berkshire',
     addressCountry: 'GB',
   },
-  sameAs: [business.instagramUrl],
+  sameAs,
   openingHours: ['Mo-Fr 09:00-20:00', 'Sa 09:00-17:00'],
 };
 ---

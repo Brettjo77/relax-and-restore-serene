@@ -21,5 +21,5 @@ export const imageAlt = {
   towels: 'Freshly rolled towels on a massage table',
   room: 'Peaceful massage treatment room',
   'spa-hero': 'Calming massage treatment setup with candles and towels',
-  lisa: 'Lisa, founder of Relax & Restore Massage',
+  lisa: "Lisa, founder of Lisa's Relax & Restore Massage",
 };

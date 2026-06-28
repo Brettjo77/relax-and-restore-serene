@@ -2,7 +2,23 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
 import { business } from '../data/site.js';
+
+const year = new Date().getFullYear();
 ---
+<!-- Privacy notice (anchored target for the form's consent link) -->
+<section class="privacy" id="privacy" aria-labelledby="privacy-title">
+  <div class="privacy__inner">
+    <h2 class="privacy__title" id="privacy-title">Privacy notice</h2>
+    <p>
+      When you send an enquiry through this site, the details you provide (your name, contact
+      details and message) are used only to respond to your enquiry and arrange your treatment.
+      Your enquiry is delivered to {business.name} by email via our form provider (Formspree).
+      Your details are never sold or shared for marketing, and you can ask us to delete them at
+      any time by emailing <a href={business.emailHref}>{business.email}</a>.
+    </p>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer__inner">
     <a href="#top" class="footer__brand" aria-label={`${business.name} home`}>
@@ -10,14 +26,32 @@ import { business } from '../data/site.js';
       <span class="footer__name">{business.wordmark} MASSAGE</span>
     </a>
     <p class="footer__tagline">{business.tagline}</p>
+    <p class="footer__area">{business.areaServed}</p>
     <p class="footer__copy">
-      © 2026 Relax &amp; Restore Massage ·
-      <a href={business.instagramUrl} target="_blank" rel="noopener">{business.instagramHandle}</a>
+      © {year} {business.name} ·
+      <a href={business.instagramUrl} target="_blank" rel="noopener">{business.instagramHandle}</a> ·
+      <a href="#privacy">Privacy</a>
     </p>
   </div>
 </footer>
 
 <style>
+  .privacy {
+    background: var(--cream);
+    border-top: 1px solid var(--line-3);
+    padding: 40px var(--gutter);
+  }
+  .privacy__inner { max-width: 60ch; margin-inline: auto; text-align: center; }
+  .privacy__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--brown-deep);
+    margin: 0 0 12px;
+  }
+  .privacy p { color: var(--muted); line-height: 1.7; font-size: 14px; margin: 0; }
+  .privacy a { color: var(--sage-deep); }
+
   .footer {
     background: var(--forest-2);
     color: var(--cream);
@@ -25,6 +59,7 @@ import { business } from '../data/site.js';
     text-align: center;
   }
   .footer__inner { max-width: var(--maxw); margin-inline: auto; }
+  .footer__area { margin: 10px auto 0; max-width: 44ch; font-size: 13px; color: var(--muted-3); }
   .footer__brand {
     display: inline-flex;
     align-items: center;

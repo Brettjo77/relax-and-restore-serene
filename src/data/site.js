@@ -5,21 +5,40 @@
  */
 
 export const business = {
-  name: 'Relax & Restore Massage',
+  name: "Lisa's Relax & Restore Massage",
   wordmark: 'RELAX & RESTORE',
   tagline: 'Mobile Massage · Reading',
-  areaServed: 'Lower Earley, Reading — serving Reading & surrounding areas',
+  areaServed:
+    'Mobile across Wokingham, Bracknell, Sandhurst & Crowthorne — treatment room in Lower Earley, Reading',
+  // Clean place-list for structured data / JSON-LD (no marketing punctuation):
+  areaServedSchema:
+    'Wokingham, Bracknell, Sandhurst, Crowthorne and Lower Earley, Reading, Berkshire',
   locality: 'Lower Earley',
   region: 'Reading',
-  // PLACEHOLDERS — confirm with Lisa (spec §10):
-  phone: '[07XXX XXX XXX]',
-  phoneHref: 'tel:+44',          // PLACEHOLDER — set real tel: link
-  email: '[hello@relaxandrestore.co.uk]',
-  emailHref: 'mailto:hello@relaxandrestore.co.uk', // PLACEHOLDER
+  // Confirmed by Lisa (2026-06-28):
+  phone: '07867 303361',
+  phoneHref: 'tel:+447867303361',
+  email: 'lisarelax@outlook.com',
+  emailHref: 'mailto:lisarelax@outlook.com',
   instagramHandle: '@relax.restore1',
   instagramUrl: 'https://www.instagram.com/relax.restore1/',
+  // PLACEHOLDERS — Lisa to send links/details (keep visible, don't fabricate):
+  facebookUrl: '[facebook-url]',    // PLACEHOLDER — set Lisa's Facebook page URL
+  tiktokUrl: '[tiktok-url]',        // PLACEHOLDER — set Lisa's TikTok URL
   hours: 'Mon–Fri 9am–8pm · Sat 9am–5pm · Sun by appointment', // PLACEHOLDER — confirm
   offer: '10% off your first treatment for new clients',
+  // Prices confirmed by email enquiry. Add the "from £XX" floor once Lisa sends her price list,
+  // e.g. 'Prices from £35 · confirmed by email enquiry'. Keep it readable until then (no bare dash).
+  pricingNote: 'Prices confirmed by email enquiry',
+};
+
+// Lisa's professional credentials (spec §16 trust). Facts + logos only — NO certificate
+// image and NO surname. Insurance line is a PLACEHOLDER until Lisa confirms — don't assert it.
+export const credentials = {
+  qualification: 'Diploma in Swedish Body Massage',
+  issuer: 'The Beauty Academy',
+  accreditation: 'ABT (Associated Beauty Therapists) accredited',
+  insurance: '[Fully insured — confirm with Lisa]', // PLACEHOLDER
 };
 
 export const nav = [
@@ -28,25 +47,43 @@ export const nav = [
   { label: 'How it works', href: '#ways' },
 ];
 
-// Spec §7.4 — exactly two treatments. Prices are `from £—` placeholders.
+// Lisa's current treatment list (supersedes the old "exactly two treatments" spec rule).
+// No per-treatment prices — "prices from" guide + quote by email (business.pricingNote).
+// Pedicures & Lymphatic Drainage launch ~mid-July 2026 — shown as `comingSoon`.
 export const services = [
   {
     num: '01',
-    name: 'Full Body Swedish Massage',
+    name: 'Swedish Full Body Massage',
     durations: '60 min · 90 min',
     description:
       'A flowing, full-body massage for deep relaxation, improved circulation and total stress relief.',
-    price: 'from £—', // PLACEHOLDER — confirm per duration
+    comingSoon: false,
     image: 'massage',
   },
   {
     num: '02',
-    name: 'Back, Neck & Shoulders',
-    durations: '30 min · 45 min',
+    name: 'Back, Neck & Shoulder Massage',
+    durations: '30 min',
     description:
       'Targeted relief for tension and aches where you carry stress the most — perfect for a busy week.',
-    price: 'from £—', // PLACEHOLDER — confirm per duration
+    comingSoon: false,
     image: 'towels',
+  },
+  {
+    num: '03',
+    name: 'Pedicures',
+    durations: 'Coming soon',
+    description:
+      'A relaxing, restorative pedicure to leave your feet feeling cared for. Launching mid-July — get in touch to register your interest.',
+    comingSoon: true,
+  },
+  {
+    num: '04',
+    name: 'Lymphatic Drainage',
+    durations: 'Coming soon',
+    description:
+      'A gentle, rhythmic treatment that encourages natural drainage to reduce puffiness and support wellbeing. Launching mid-July — get in touch to register your interest.',
+    comingSoon: true,
   },
 ];
 
@@ -65,7 +102,7 @@ export const ways = [
   {
     icon: 'home',
     title: 'Mobile to you',
-    body: 'Relax in the comfort of your own home without having to travel. I bring everything needed for a professional treatment to you.',
+    body: 'Relax in the comfort of your own home without having to travel — mobile across Wokingham, Bracknell, Sandhurst and Crowthorne. I bring everything needed for a professional treatment to you.',
     image: 'room',
   },
   {
@@ -76,7 +113,7 @@ export const ways = [
   },
 ];
 
-// Spec §7.7 — built as an array so more can be added later.
+// Array so more can be added later. All are Lisa's own clients (cleared to use).
 export const testimonials = [
   {
     name: 'Julie Harris',
@@ -84,12 +121,26 @@ export const testimonials = [
     quote:
       'Such a lovely massage! The treatment was relaxing, professional, and left me feeling completely refreshed. The atmosphere was calm and welcoming. Highly recommend and will definitely be returning.',
   },
+  {
+    name: 'Hannah Oatley',
+    rating: 5,
+    quote:
+      'Just home from a wonderfully relaxing full body massage with Lisa. The tension has gone from my neck and shoulders and I feel totally chilled. I would thoroughly recommend.',
+  },
+  {
+    name: 'Lisa Harrison',
+    rating: 5,
+    quote:
+      'Thank you Lisa for a great back, neck and shoulder massage yesterday. My back feels so much better. I’ve booked in for my next one.',
+  },
 ];
 
-// Spec §9 — contact form select options.
+// Contact form select options — match the live + coming-soon treatments.
 export const treatmentOptions = [
-  'Full Body Swedish Massage',
-  'Back, Neck & Shoulders',
+  'Swedish Full Body Massage',
+  'Back, Neck & Shoulder Massage',
+  'Pedicures (coming soon)',
+  'Lymphatic Drainage (coming soon)',
   'Not sure yet',
 ];
 
