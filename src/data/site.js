@@ -57,8 +57,8 @@ export const services = [
     durations: '60 min · 90 min',
     description:
       'A flowing, full-body massage for deep relaxation, improved circulation and total stress relief.',
-    comingSoon: false,
     image: 'massage',
+    icon: 'lotus',
   },
   {
     num: '02',
@@ -66,24 +66,24 @@ export const services = [
     durations: '30 min',
     description:
       'Targeted relief for tension and aches where you carry stress the most — perfect for a busy week.',
-    comingSoon: false,
     image: 'towels',
+    icon: 'muscle',
   },
   {
     num: '03',
     name: 'Pedicures',
-    durations: 'Coming soon',
+    durations: 'By appointment',
     description:
-      'A relaxing, restorative pedicure to leave your feet feeling cared for. Launching mid-July — get in touch to register your interest.',
-    comingSoon: true,
+      'A relaxing, restorative pedicure to leave your feet feeling cared for.',
+    icon: 'flex',
   },
   {
     num: '04',
     name: 'Lymphatic Drainage',
-    durations: 'Coming soon',
+    durations: 'By appointment',
     description:
-      'A gentle, rhythmic treatment that encourages natural drainage to reduce puffiness and support wellbeing. Launching mid-July — get in touch to register your interest.',
-    comingSoon: true,
+      'A gentle, rhythmic treatment to reduce puffiness and support natural wellbeing.',
+    icon: 'circulation',
   },
 ];
 

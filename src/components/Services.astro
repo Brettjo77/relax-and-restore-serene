@@ -1,6 +1,7 @@
 ---
-// Direction 01 · Serene — two cards side by side (image top, content below). Spec §7.4, §8 Dir 01.
+// Direction 01 · Serene — compact, equal treatment cards: round thumbnail (photo or icon) + text.
 import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
 import { services, business } from '../data/site.js';
 import { images, imageAlt } from '../data/images.js';
 ---
@@ -13,34 +14,26 @@ import { images, imageAlt } from '../data/images.js';
 
     <ul class="cards">
       {services.map((s) => (
-        <li class:list={["card", { "card--soon": s.comingSoon }]}>
-          <div class="card__media">
+        <li class="card">
+          <span class="card__thumb">
             {s.image ? (
               <Image
                 src={images[s.image]}
                 alt={imageAlt[s.image]}
                 class="card__img"
-                widths={[420, 640, 840]}
-                sizes="(max-width: 860px) 92vw, 540px"
+                widths={[120, 240]}
+                sizes="72px"
                 loading="lazy"
               />
             ) : (
-              <div class="card__img card__img--placeholder" aria-hidden="true"></div>
+              <Icon name={s.icon} size={30} />
             )}
-            <span class="card__num">{s.num}</span>
-            {s.comingSoon && <span class="card__badge">Coming soon</span>}
-          </div>
+          </span>
           <div class="card__body">
-            <div class="card__top">
-              <h3 class="card__name">{s.name}</h3>
-            </div>
+            <h3 class="card__name">{s.name}</h3>
             <p class="card__dur">{s.durations}</p>
             <p class="card__desc">{s.description}</p>
-            {s.comingSoon ? (
-              <a class="btn btn--sage card__book" href="#contact">Register interest</a>
-            ) : (
-              <a class="btn btn--sage card__book" href="#contact">Book</a>
-            )}
+            <a class="btn btn--sage card__book" href="#contact">Book</a>
           </div>
         </li>
       ))}
@@ -58,79 +51,60 @@ import { images, imageAlt } from '../data/images.js';
     list-style: none;
     margin: 0; padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    align-items: stretch;
   }
   .card {
     background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     box-shadow: var(--shadow-card);
-    overflow: hidden;
+    padding: 26px 22px 24px;
+    text-align: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
-  .card__media { position: relative; }
-  .card__img {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    display: block;
-  }
-  .card__num {
-    position: absolute;
-    top: 16px; left: 16px;
-    background: var(--sage);
-    color: #fff;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 16px;
-    width: 40px; height: 40px;
+  /* Round thumbnail: photo or icon, same size for every card */
+  .card__thumb {
+    width: 72px; height: 72px;
     border-radius: 50%;
+    overflow: hidden;
+    flex: 0 0 auto;
     display: grid; place-items: center;
-  }
-  /* Coming-soon treatments: muted card, no photo, badge instead of price. */
-  .card__img--placeholder {
-    background:
-      radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.7), transparent 60%),
-      var(--blush, #f3e8e6);
-  }
-  .card__badge {
-    position: absolute;
-    top: 16px; right: 16px;
-    background: rgba(255, 255, 255, .92);
+    background: var(--sand);
     color: var(--sage-deep);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    border-radius: 999px;
-    box-shadow: var(--shadow-card);
+    margin-bottom: 16px;
   }
-  .card--soon { opacity: .82; }
-  .card--soon .card__name { color: var(--muted); }
-  .card__body { padding: 26px 28px 30px; display: flex; flex-direction: column; flex: 1; }
-  .card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .card__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .card__body { display: flex; flex-direction: column; align-items: center; flex: 1; }
   .card__name {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(21px, 2.2vw, 26px);
+    font-size: 18px;
+    line-height: 1.25;
     color: var(--brown-deep);
+    margin: 0;
   }
   .card__dur {
-    margin: 8px 0 0;
-    font-size: 12px;
-    letter-spacing: .14em;
+    margin: 7px 0 0;
+    font-size: 11px;
+    letter-spacing: .13em;
     text-transform: uppercase;
     color: var(--muted-2);
   }
-  .card__desc { margin: 14px 0 0; color: var(--muted); line-height: 1.7; }
-  .card__book { margin-top: auto; align-self: flex-start; margin-top: 22px; }
+  .card__desc { margin: 11px 0 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .card__book { margin-top: auto; padding-top: 18px; }
 
-  .services__foot { margin: 36px 0 0; text-align: center; font-size: 13px; color: var(--muted-2); }
+  .services__foot { margin: 30px 0 0; text-align: center; font-size: 13px; color: var(--muted-2); }
 
+  /* 4 → 2 (tablet) → 1 (phone), reusing the site's 860/640 breakpoints */
   @media (max-width: 860px) {
-    .cards { grid-template-columns: 1fr; max-width: 30rem; margin-inline: auto; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 34rem; margin-inline: auto; }
+  }
+  @media (max-width: 480px) {
+    .cards { grid-template-columns: 1fr; max-width: 22rem; }
   }
 </style>
