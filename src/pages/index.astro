@@ -27,6 +27,16 @@ import Footer from '../components/Footer.astro';
 </Base>
 
 <script>
+  // Always open at the top of the page. If the URL was saved/cached with a
+  // section hash (e.g. #contact from tapping "Book now"), the browser would
+  // jump straight to that section on load — strip it and reset to the top.
+  // In-page anchor taps still work normally (they're clicks, not page loads).
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
   // Direction 01 · Serene — mobile nav toggle + transparent→solid on scroll.
   const topnav = document.getElementById('topnav');
   const toggle = document.getElementById('navtoggle');
