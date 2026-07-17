@@ -85,6 +85,14 @@ export const services = [
       'A gentle, rhythmic treatment to reduce puffiness and support natural wellbeing.',
     icon: 'circulation',
   },
+  {
+    num: '05',
+    name: 'Indian Head Massage',
+    durations: 'By appointment',
+    description:
+      'Release tension, calm the mind, and ease headaches with a relaxing massage focused on the scalp, neck, and shoulders.',
+    icon: 'calm',
+  },
 ];
 
 // Spec §7.5 — benefits of Swedish massage (icon key + label).
@@ -141,6 +149,7 @@ export const treatmentOptions = [
   'Back, Neck & Shoulder Massage',
   'Pedicures',
   'Lymphatic Drainage',
+  'Indian Head Massage',
   'Not sure yet',
 ];
 
