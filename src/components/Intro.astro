@@ -10,6 +10,7 @@ const meta = {
   'Back, Neck & Shoulder Massage': { icon: 'muscle', body: 'Targeted relief for tension where you carry stress the most.' },
   'Pedicures': { icon: 'flex', body: 'A restorative pedicure to leave your feet feeling cared for.' },
   'Lymphatic Drainage': { icon: 'circulation', body: 'Gentle, rhythmic treatment to reduce puffiness and support wellbeing.' },
+  'Indian Head Massage': { icon: 'calm', body: 'Release tension, calm the mind and ease headaches — focused on the scalp, neck and shoulders.' },
 };
 
 const pillars = services.map((s) => ({
@@ -53,11 +54,15 @@ const pillars = services.map((s) => ({
 
   .intro__pillars {
     list-style: none;
-    margin: 38px 0 0;
+    margin: 44px auto 0;
     padding: 0;
+    max-width: 62rem;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 26px;
+    /* 3 across so 5 treatments sit as a balanced 3 + 2; fixed track + centred
+       justification keeps the trailing row centred with equal sides. */
+    grid-template-columns: repeat(3, 15rem);
+    justify-content: center;
+    gap: 44px 40px;
   }
   .intro__pillar { text-align: center; }
   .intro__icon {
@@ -78,11 +83,11 @@ const pillars = services.map((s) => ({
   }
   .intro__pbody { color: var(--muted); line-height: 1.6; margin: 0; max-width: 30ch; margin-inline: auto; }
 
-  /* 4 → 2 across tablets, → 1 on phones (reuses the site's 860/640 breakpoints). */
+  /* 3 → 2 across tablets, → 1 on phones (reuses the site's 860/640 breakpoints). */
   @media (max-width: 860px) {
-    .intro__pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 38rem; margin-inline: auto; }
+    .intro__pillars { grid-template-columns: repeat(2, 15rem); gap: 40px 36px; max-width: 34rem; }
   }
   @media (max-width: 640px) {
-    .intro__pillars { grid-template-columns: 1fr; gap: 22px; max-width: 24rem; }
+    .intro__pillars { grid-template-columns: minmax(0, 22rem); gap: 30px; max-width: 22rem; }
   }
 </style>
