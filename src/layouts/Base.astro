@@ -1,6 +1,6 @@
 ---
 import '../styles/tokens.css';
-import { business } from '../data/site.js';
+import { business, analytics } from '../data/site.js';
 
 const {
   title = "Lisa's Relax & Restore Massage | Swedish Massage in Lower Earley & Wokingham",
@@ -69,6 +69,73 @@ const jsonLd = {
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!--
+      Google Ads (spec: Lisa's request, Sep 2026). Consent Mode v2 is set to denied
+      BEFORE the tag loads, so no advertising cookies are written until the visitor
+      accepts in the banner. Google still receives cookieless pings for modelling.
+      `is:inline` keeps Astro from bundling this — it must run in the head, in order.
+    -->
+    <script
+      is:inline
+      define:vars={{ adsId: analytics.googleAdsId, conversions: analytics.conversions }}
+    >
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      // `define:vars` wraps this script in an IIFE, so the declaration above is
+      // NOT global. Expose it explicitly — the consent banner calls window.gtag
+      // to grant consent, and silently does nothing if it's missing.
+      window.gtag = gtag;
+
+      // Deny everything up front (UK PECR / GDPR — consent before ad cookies).
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'granted',
+        security_storage: 'granted',
+        wait_for_update: 500,
+      });
+
+      // Re-apply a previous "accept" before the tag initialises, so returning
+      // visitors aren't asked again and their conversions still register.
+      try {
+        if (localStorage.getItem('rr-consent') === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted',
+          });
+        }
+      } catch (e) { /* private mode / storage blocked — stay denied */ }
+
+      gtag('js', new Date());
+      gtag('config', adsId);
+
+      /**
+       * Fire a Google Ads conversion by key ('enquiry' | 'phone' | 'email').
+       * No-ops on an unset [bracketed] placeholder label, so nothing is reported
+       * against a made-up conversion ID before Lisa sends the real ones.
+       */
+      window.rrTrack = function (key) {
+        var label = conversions && conversions[key];
+        if (!label || label.charAt(0) === '[') return;
+        gtag('event', 'conversion', { send_to: adsId + '/' + label });
+      };
+
+      // Phone/email leads. Delegated so it covers every tel:/mailto: on the page,
+      // including the one in the form's "couldn't send" fallback message.
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
+        if (!a) return;
+        // The privacy notice's mailto is a data-deletion request, not an enquiry.
+        if (a.closest('#privacy')) return;
+        window.rrTrack(a.getAttribute('href').indexOf('tel:') === 0 ? 'phone' : 'email');
+      });
+    </script>
+    <script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${analytics.googleAdsId}`}></script>
   </head>
   <body>
     <slot />

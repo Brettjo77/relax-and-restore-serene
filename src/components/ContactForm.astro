@@ -350,6 +350,11 @@ const FORMSPREE_READY = FORMSPREE_ID !== 'REPLACE_WITH_FORM_ID';
         return;
       }
 
+      // Google Ads conversion. Fired only here — after Formspree confirmed the
+      // send — so a failed enquiry is never counted. There's no thank-you URL to
+      // track (the success state swaps in place), so it has to happen in JS.
+      (window as any).rrTrack?.('enquiry');
+
       form.hidden = true;
       thanks.hidden = false;
       thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });

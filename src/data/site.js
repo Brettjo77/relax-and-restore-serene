@@ -41,6 +41,30 @@ export const credentials = {
   insurance: '[Fully insured — confirm with Lisa]', // PLACEHOLDER
 };
 
+/**
+ * Google Ads conversion tracking (requested by Lisa, Sep 2026).
+ *
+ * The tag is loaded with Consent Mode v2 set to DENIED by default and is only
+ * granted once the visitor accepts in the consent banner (UK PECR / GDPR) —
+ * see ConsentBanner.astro and the head script in Base.astro.
+ *
+ * `id` is the Ads account tag. Each conversion needs its own LABEL, found in
+ * Google Ads → Goals → Conversions → (action) → Tag setup → "Install the tag
+ * yourself". A label looks like `AbC-D_efGhIjKlMn`; the full send_to value is
+ * `AW-18414389158/AbC-D_efGhIjKlMn`.
+ *
+ * PLACEHOLDERS until Lisa sends them. An unset [bracketed] label simply does
+ * not fire — the site works, that conversion is just not recorded yet.
+ */
+export const analytics = {
+  googleAdsId: 'AW-18414389158',
+  conversions: {
+    enquiry: '[enquiry-conversion-label]', // PLACEHOLDER — form successfully sent
+    phone: '[phone-conversion-label]',     // PLACEHOLDER — tapped the phone number
+    email: '[email-conversion-label]',     // PLACEHOLDER — clicked the email address
+  },
+};
+
 export const nav = [
   { label: 'About', href: '#about' },
   { label: 'Treatments', href: '#services' },

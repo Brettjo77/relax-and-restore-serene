@@ -1,0 +1,146 @@
+---
+/**
+ * Cookie consent banner (UK PECR / UK GDPR).
+ *
+ * The Google Ads tag in Base.astro starts with Consent Mode v2 DENIED. This
+ * banner is the only thing that grants it. Choice is stored in localStorage as
+ * `rr-consent` = 'granted' | 'denied' and re-applied on the next visit by the
+ * head script, so a visitor is asked once.
+ *
+ * Rendered hidden and revealed by JS: a visitor who has already chosen never
+ * sees a flash of it, and it stays out of the way of the hero on first paint.
+ */
+---
+
+<div
+  class="consent"
+  id="consent"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="consent-title"
+  aria-describedby="consent-body"
+  hidden
+>
+  <div class="consent__inner">
+    <div class="consent__text">
+      <h2 class="consent__title" id="consent-title">Cookies on this site</h2>
+      <p class="consent__body" id="consent-body">
+        We'd like to use advertising cookies to measure how well our Google ads work. These are
+        only set if you accept. Essential cookies needed to run the site are always on.
+        See our <a href={`${import.meta.env.BASE_URL}#privacy`}>privacy notice</a>.
+      </p>
+    </div>
+    <div class="consent__actions">
+      <button type="button" class="btn btn--sage consent__btn" data-consent="granted">Accept</button>
+      <button type="button" class="consent__decline" data-consent="denied">Decline</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .consent {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 18px;
+    z-index: 60;
+    width: min(680px, calc(100% - 28px));
+    background: var(--cream-light);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-float);
+    padding: 22px 26px;
+  }
+  .consent__inner {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .consent__text { flex: 1 1 auto; }
+  .consent__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 21px;
+    color: var(--brown-deep);
+    margin: 0 0 6px;
+  }
+  .consent__body {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0;
+  }
+  .consent__body a { color: var(--sage-deep); }
+
+  .consent__actions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .consent__btn { padding: 12px 28px; }
+  .consent__decline {
+    background: none;
+    border: 0;
+    padding: 6px 2px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--muted-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .consent__decline:hover { color: var(--ink); }
+
+  /* Stack on narrow screens so neither the text nor the buttons get squeezed. */
+  @media (max-width: 640px) {
+    .consent { bottom: 12px; padding: 20px 20px 18px; }
+    .consent__inner { flex-direction: column; align-items: stretch; gap: 16px; }
+    .consent__actions { justify-content: space-between; }
+    .consent__btn { flex: 1 1 auto; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .consent { animation: consent-in .28s ease-out both; }
+    @keyframes consent-in {
+      from { opacity: 0; transform: translate(-50%, 10px); }
+      to   { opacity: 1; transform: translate(-50%, 0); }
+    }
+  }
+</style>
+
+<script>
+  {
+    const banner = document.getElementById('consent') as HTMLElement | null;
+    if (banner) {
+      const KEY = 'rr-consent';
+
+      const read = () => {
+        try { return localStorage.getItem(KEY); } catch { return null; }
+      };
+
+      // Only ask if they haven't already chosen. Storage blocked (private mode)
+      // counts as "not chosen" — better to ask again than to assume consent.
+      if (read() === null) banner.hidden = false;
+
+      banner.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement)?.closest?.('[data-consent]') as HTMLElement | null;
+        if (!btn) return;
+        const choice = btn.dataset.consent;
+
+        try { localStorage.setItem(KEY, choice!); } catch { /* choice lasts this visit only */ }
+
+        if (choice === 'granted') {
+          // gtag() is defined by the head script in Base.astro.
+          (window as any).gtag?.('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted',
+          });
+        }
+        banner.hidden = true;
+      });
+    }
+  }
+</script>
