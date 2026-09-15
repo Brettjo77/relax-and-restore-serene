@@ -121,7 +121,9 @@ export const ways = [
   },
 ];
 
-// Array so more can be added later. All are Lisa's own clients (cleared to use).
+// Array so more can be added later. All are Lisa's own clients (cleared to use);
+// the later entries are her public Facebook recommendations, lightly tidied
+// (emoji and typos removed) so they read consistently with the rest.
 export const testimonials = [
   {
     name: 'Julie Harris',
@@ -140,6 +142,30 @@ export const testimonials = [
     rating: 5,
     quote:
       'Thank you Lisa for a great back, neck and shoulder massage yesterday. My back feels so much better. I’ve booked in for my next one.',
+  },
+  {
+    name: 'Hayleigh Robinson',
+    rating: 5,
+    quote:
+      'WOW!! I don’t know how else to explain the back, neck and shoulder massage I had with Lisa. Beautiful set up, lovely and relaxing and made me feel so relaxed afterwards.',
+  },
+  {
+    name: 'Catherine Targett',
+    rating: 5,
+    quote:
+      'Just had the most amazing massage done by Lisa! I will 100% be booking back in with her! Her hands are like magic.',
+  },
+  {
+    name: 'Shauna Moors',
+    rating: 5,
+    quote:
+      'Absolutely fantastic massage and relaxation. Was professional, welcoming, and made me feel completely relaxed from start to finish. The treatment was exactly what I needed, and I left feeling refreshed and rejuvenated. Highly recommend, and I’ll definitely be returning!',
+  },
+  {
+    name: 'Shannon Saunders',
+    rating: 5,
+    quote:
+      'Fantastic service! Very professional and friendly, will definitely be returning and recommending.',
   },
 ];
 

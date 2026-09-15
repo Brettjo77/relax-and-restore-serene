@@ -35,13 +35,19 @@ import { testimonials } from '../data/site.js';
   .testimonial__grid {
     list-style: none;
     margin: 0; padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Wrapping flexbox rather than a grid: with a count that doesn't divide by 3
+       (7 reviews), a grid strands the last card hard left in track 1. Flex wrapping
+       centres a short trailing row instead. */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 26px;
-    align-items: stretch;
   }
-  /* Make each grid cell a flex container so the card fills the full row height. */
-  .testimonial__grid > li { display: flex; }
+  /* Each cell is itself a flex container so the card fills the full row height. */
+  .testimonial__grid > li {
+    display: flex;
+    flex: 0 1 calc((100% - 52px) / 3);
+  }
   .testimonial__card {
     background: #fff;
     border-radius: var(--r-card);
@@ -80,14 +86,12 @@ import { testimonials } from '../data/site.js';
 
   /* 3 → 2 across tablets, → 1 on phones (reuses the site's 860/640 breakpoints). */
   @media (max-width: 860px) {
-    .testimonial__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      max-width: 40rem;
-      margin-inline: auto;
-    }
+    .testimonial__grid { max-width: 40rem; margin-inline: auto; }
+    .testimonial__grid > li { flex-basis: calc((100% - 26px) / 2); }
   }
   @media (max-width: 640px) {
-    .testimonial__grid { grid-template-columns: 1fr; max-width: 30rem; }
+    .testimonial__grid { max-width: 30rem; }
+    .testimonial__grid > li { flex-basis: 100%; }
     .testimonial__card { padding: 32px 26px 28px; }
   }
 </style>
