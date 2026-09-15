@@ -44,11 +44,38 @@ in the in-place thank-you (`role="status"` / `aria-live="polite"`) — no naviga
 
 ## GitHub Pages config (don't break this)
 
-Project site at `https://brettjo77.github.io/relax-and-restore-serene/`. `site` + `base` in
-[astro.config.mjs](astro.config.mjs) must match the repo path or CSS/images 404 on the live
-site. Asset hrefs in Base.astro are prefixed with `import.meta.env.BASE_URL`; keep new
-absolute asset paths base-aware. Deploy is [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
-(build → upload-pages-artifact → deploy-pages) on push to `main`.
+Live at the **custom domain** `https://www.lisasrelaxrestoremassage.co.uk`, served at the
+root. In [astro.config.mjs](astro.config.mjs), `site` is that domain and **`base` is `'/'`** —
+do NOT set `base` back to `/relax-and-restore-serene/`. The domain is claimed by
+[public/CNAME](public/CNAME); deleting that file drops the site back to the
+`brettjo77.github.io` project path and breaks every asset.
+
+Asset hrefs in Base.astro are still prefixed with `import.meta.env.BASE_URL` (harmless at
+`'/'`, and keeps the site portable); keep new absolute asset paths base-aware. Deploy is
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml) (build → upload-pages-artifact →
+deploy-pages) on push to `main` — a push publishes straight to Lisa's live site, so treat
+`main` as production.
+
+## Google Ads tracking + cookie consent (don't fire tags without consent)
+
+Lisa runs Google Ads. The tag and its conversion labels live in `analytics` in
+[src/data/site.js](src/data/site.js); labels are `[bracketed]` placeholders until she sends
+the real ones, and an unset label deliberately fires nothing.
+
+- The tag is set up in [Base.astro](src/layouts/Base.astro) with **Consent Mode v2 denied by
+  default**, before the tag loads. [ConsentBanner.astro](src/components/ConsentBanner.astro) is
+  the only thing that grants it (stored as `rr-consent` in localStorage). **Never fire ad tags
+  or set advertising cookies before consent** — UK PECR/GDPR.
+- `define:vars` wraps an inline script in an IIFE, so `function gtag()` is *not* global — it's
+  assigned to `window.gtag` explicitly. Keep that, or the banner's Accept silently grants nothing.
+- Conversions fire through `window.rrTrack(key)`: `'enquiry'` at the form's success point in
+  [ContactForm.astro](src/components/ContactForm.astro) (after Formspree confirms — never on a
+  failed send), and `'phone'` / `'email'` via a delegated `tel:`/`mailto:` listener. The privacy
+  notice's mailto is excluded on purpose: it's a data-deletion request, not a lead.
+- There is **no thank-you URL** to track — the form swaps its success state in place — so
+  conversions must be fired in JS. Don't expect Google's page-load method to work here.
+- If you change what data is collected, update the privacy notice in
+  [Footer.astro](src/components/Footer.astro) to match. It is Lisa's published statement.
 
 ## Cross-cutting requirements (from the spec — don't skip)
 
