@@ -38,7 +38,7 @@ export const credentials = {
   qualification: 'Diploma in Swedish Body Massage',
   issuer: 'The Beauty Academy',
   accreditation: 'ABT (Associated Beauty Therapists) accredited',
-  insurance: '[Fully insured — confirm with Lisa]', // PLACEHOLDER
+  insurance: 'Fully insured for all treatments offered', // Confirmed by Lisa, Oct 2026 (ABT)
 };
 
 /**
@@ -73,7 +73,9 @@ export const nav = [
 
 // Lisa's current treatment list (supersedes the old "exactly two treatments" spec rule).
 // No per-treatment prices — "prices from" guide + quote by email (business.pricingNote).
-// Pedicures & Lymphatic Drainage launch ~mid-July 2026 — shown as `comingSoon`.
+// Grouped massage treatments first (01-05), then beauty treatments (06-09). Nine entries
+// fills the 3-across pillar grid exactly (3 + 3 + 3) — see Intro.astro before changing the
+// count. Waxing / Tinting / Brow Lamination / Hot Stone added Oct 2026 at Lisa's request.
 export const services = [
   {
     num: '01',
@@ -95,14 +97,22 @@ export const services = [
   },
   {
     num: '03',
-    name: 'Pedicures',
+    name: 'Hot Stone Massage',
     durations: 'By appointment',
     description:
-      'A relaxing, restorative pedicure to leave your feet feeling cared for.',
-    icon: 'flex',
+      'Smooth, warmed stones melt away deep-held tension, easing tight muscles and leaving you completely unwound.',
+    icon: 'stones',
   },
   {
     num: '04',
+    name: 'Indian Head Massage',
+    durations: 'By appointment',
+    description:
+      'Release tension, calm the mind, and ease headaches with a relaxing massage focused on the scalp, neck, and shoulders.',
+    icon: 'calm',
+  },
+  {
+    num: '05',
     name: 'Lymphatic Drainage',
     durations: 'By appointment',
     description:
@@ -110,12 +120,36 @@ export const services = [
     icon: 'circulation',
   },
   {
-    num: '05',
-    name: 'Indian Head Massage',
+    num: '06',
+    name: 'Brow Lamination',
     durations: 'By appointment',
     description:
-      'Release tension, calm the mind, and ease headaches with a relaxing massage focused on the scalp, neck, and shoulders.',
-    icon: 'calm',
+      'Brows brushed up and set into a fuller, groomed shape that lasts for weeks — polished, with no daily effort.',
+    icon: 'brow',
+  },
+  {
+    num: '07',
+    name: 'Tinting',
+    durations: 'By appointment',
+    description:
+      'A tint to deepen and define brows or lashes, adding lasting definition and softening the need for make-up.',
+    icon: 'droplet',
+  },
+  {
+    num: '08',
+    name: 'Waxing',
+    durations: 'By appointment',
+    description:
+      'Gentle, professional waxing for smooth, long-lasting results — carried out with care and your comfort in mind.',
+    icon: 'smooth',
+  },
+  {
+    num: '09',
+    name: 'Pedicures',
+    durations: 'By appointment',
+    description:
+      'A relaxing, restorative pedicure to leave your feet feeling cared for.',
+    icon: 'flex',
   },
 ];
 
@@ -194,12 +228,17 @@ export const testimonials = [
 ];
 
 // Contact form select options.
+// Mirrors `services` order — keep the two in step when treatments change.
 export const treatmentOptions = [
   'Swedish Full Body Massage',
   'Back, Neck & Shoulder Massage',
-  'Pedicures',
-  'Lymphatic Drainage',
+  'Hot Stone Massage',
   'Indian Head Massage',
+  'Lymphatic Drainage',
+  'Brow Lamination',
+  'Tinting',
+  'Waxing',
+  'Pedicures',
   'Not sure yet',
 ];
 
