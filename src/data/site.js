@@ -69,6 +69,7 @@ export const nav = [
   { label: 'About', href: '#about' },
   { label: 'Treatments', href: '#services' },
   { label: 'How it works', href: '#ways' },
+  { label: 'My work', href: '#work' },
 ];
 
 // Lisa's current treatment list (supersedes the old "exactly two treatments" spec rule).
@@ -151,6 +152,25 @@ export const services = [
       'A relaxing, restorative pedicure to leave your feet feeling cared for.',
     icon: 'flex',
   },
+];
+
+/**
+ * Lisa's own work, shown in the gallery section (added Oct 2026).
+ *
+ * Clients have agreed to their photos appearing on the website. Only add photos
+ * Lisa took herself and has permission for — never stock images, and never one
+ * carrying another company's watermark.
+ *
+ * `caption` is shown under each photo; `image` keys into images.js, which also
+ * holds the alt text. Mixed portrait/square sizes are fine — the gallery is a
+ * masonry layout and does not crop.
+ */
+export const gallery = [
+  { image: 'brows-before-after-1', caption: 'Brow lamination — before & after' },
+  { image: 'brows-finished-1', caption: 'Laminated & tinted, neatly set' },
+  { image: 'brows-before-after-2', caption: 'Brow lamination — before & after' },
+  { image: 'brows-before-after-3', caption: 'Lamination & tint — before & after' },
+  { image: 'brows-finished-2', caption: 'A soft, brushed-up finish' },
 ];
 
 // Spec §7.5 — benefits of Swedish massage (icon key + label).

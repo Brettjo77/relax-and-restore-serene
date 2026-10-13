@@ -142,7 +142,10 @@ const socials = [
   .navtoggle span { width: 22px; height: 2px; background: var(--brown-deep); transition: .2s ease; }
   .topnav[data-state="top"] .navtoggle span { background: var(--cream); }
 
-  @media (max-width: 760px) {
+  /* Hamburger below 960px. Was 760px, which fitted three links — the fourth
+     ("My work") pushed the row past the viewport and scrolled the page
+     sideways between 760 and ~940px. Raise it to where the row actually fits. */
+  @media (max-width: 960px) {
     .navtoggle { display: flex; }
     .nav {
       position: absolute;
